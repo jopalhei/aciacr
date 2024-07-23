@@ -34,7 +34,7 @@ namespace ACITrigger
                 Console.WriteLine("Failed to acquire default credential in catch block");
             }
 
-            string subnet = "/subscriptions/c2acf93f-1807-449c-a086-314038ce9f2c/resourceGroups/lab/providers/Microsoft.Network/virtualNetworks/lab-vnet/subnets/lab";
+            string subnet = "/subscriptions/c2acf93f-1807-449c-a086-314038ce9f2c/resourceGroups/lab/providers/Microsoft.Network/virtualNetworks/lab-vnet/subnets/aci";
             string containerInstanceName = "acitest";
             string containerImage = "jopalheiacr.azurecr.io/samples/aci-helloworld";
             string containerRegistryServer = "jopalheiacr.azurecr.io";
