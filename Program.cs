@@ -83,7 +83,7 @@ namespace ACITrigger
                 };
 
             data.Identity = identity;
-            data.ImageRegistryCredentials.Add(new ContainerGroupImageRegistryCredential(containerRegistryServer) { server = containerRegistryServer, identity = identityId });
+            data.ImageRegistryCredentials.Add(new ContainerGroupImageRegistryCredential(containerRegistryServer, null) { Identity = identityId });
             data.SubnetIds.Add(new ContainerGroupSubnetId(new Azure.Core.ResourceIdentifier(subnet)));
             data.Tags.Add("test1", "Test");
             data.Tags.Add("test2", "to-delete");
