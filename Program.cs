@@ -15,7 +15,7 @@ namespace ACITrigger
     {
         public MyContainer() { }
 
-        public string identityId = "/subscriptions/<subguid>/resourcegroups/<resourcegroup>>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<mamagedID_ResourceID>";
+        public string identityId = "/subscriptions/c2acf93f-1807-449c-a086-314038ce9f2c/resourcegroups/lab/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myACRId";
         TokenCredential credential = new DefaultAzureCredential(); // Initialize with DefaultAzureCredential
 
         public void CreateContainerAsync()
@@ -34,20 +34,21 @@ namespace ACITrigger
                 Console.WriteLine("Failed to acquire default credential in catch block");
             }
 
-            string subnet = "<subnet_resource_id>";
+            string subnet = "/subscriptions/c2acf93f-1807-449c-a086-314038ce9f2c/resourceGroups/lab/providers/Microsoft.Network/virtualNetworks/lab-vnet/subnets/aci";
             string containerInstanceName = "acitest";
-            string containerImage = "jopalheiacr.azurecr.io/samples/aci-helloworld";
+            string containerImage = "jopalheiacr.azurecr.io/servercore:ltsc2019";
             string containerRegistryServer = "jopalheiacr.azurecr.io";
             string resourceGroupName = "lab";
             string newContainerGroupName = containerInstanceName;
-            
+            //string containerRegistryUsername = "acrlopes";
+            //string containerRegistryPassword = "password";
 
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             identity.UserAssignedIdentities.Add(new Azure.Core.ResourceIdentifier(identityId), new UserAssignedIdentity());
             Console.WriteLine("got identity");
 
             ArmClient client = new ArmClient(credential);
-            var subscriptionId = "sub_GUID";
+            var subscriptionId = "c2acf93f-1807-449c-a086-314038ce9f2c";
             var subscription = client.GetSubscriptionResource(new Azure.Core.ResourceIdentifier($"/subscriptions/{subscriptionId}"));
             ResourceGroupResource resourceGroup = subscription.GetResourceGroup(resourceGroupName).Value;
             var collection = resourceGroup.GetContainerGroups();
@@ -57,8 +58,8 @@ namespace ACITrigger
                 new ContainerResourceRequirements(
               new ContainerResourceRequestsContent(4, 4)));
 
-            ContainerInstanceOperatingSystemType osType = "Linux";
-            var data = osType == ContainerInstanceOperatingSystemType.Linux
+            ContainerInstanceOperatingSystemType osType = "Windows";
+            var data = osType == ContainerInstanceOperatingSystemType.Windows
                 ? new ContainerGroupData(
                     resourceGroup.Data.Location.Name,
                     new ContainerInstanceContainer[]
